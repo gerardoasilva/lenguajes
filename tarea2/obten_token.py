@@ -93,7 +93,7 @@ def obten_token():
             print("Delimitador ", lexema)
             return RRP          
         elif edo == STR:
-            _leer = False
+            lexema += _c # el último caracter forma el lexema
             print("String ", lexema)
             return STR
         elif edo == BOO:
@@ -103,7 +103,7 @@ def obten_token():
         elif edo == SMB:
             _leer = False
             print("Simbolo ", lexema)
-            return BOO
+            return SMB
         elif edo == END:
             print("Fin de expresion")
             return END
