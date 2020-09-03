@@ -69,6 +69,8 @@ def atomo():
 def constante():
     if (token == scanner.INT or token == scanner.BOO or token == scanner.STR):
         match(token) #constante
+    else
+        error("Error constante")
 
 def lista():
         elementos()
