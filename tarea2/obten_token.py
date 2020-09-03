@@ -1,3 +1,7 @@
+# INTEGRANTES
+# A01136526 - Gerardo Silva
+# A01282700 - Luis Caballero
+# A01282508 - Jorge Elizondo
   
 # -*- coding: utf-8 -*-
 
@@ -5,10 +9,6 @@
 # Finito Determinista como una Matríz de Transiciones
 # Autor: Dr. Santiago Conant, Agosto 2014 (modificado en Agosto 2015)
 
-# INTEGRANTES
-# Luis Alberto Caballero Noguez A01282700
-# Gerardo Alfonso Silva 
-# Jorge Elizondo
 
 import sys
 

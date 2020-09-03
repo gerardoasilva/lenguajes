@@ -1,43 +1,39 @@
+# INTEGRANTES
+# A01136526 - Gerardo Silva
+# A01282700 - Luis Caballero
+# A01282508 - Jorge Elizondo
+
 # Implementación de un parser
 # Reconoce expresiones mediante la gramática:
-# EXP -> EXP op EXP | EXP -> (EXP) | cte
-# la cual fué modificada para eliminar ambigüedad a:
-# EXP  -> cte EXP1 | (EXP) EXP1
-# EXP1 -> op EXP EXP1 | vacío
-# los elementos léxicos (delimitadores, constantes y operadores)
+# PROG      -> EXP PROG | $
+# EXP       -> ATOMO | LISTA
+# ATOMO     -> simbolo | CONSTANTE
+# CONSTANTE -> numero | booleano | string
+# LISTA     -> ( ELEMENTOS )
+# ELEMENTOS -> EXP ELEMENTO | vacio
+# los elementos léxicos (símbolos, números, booleanos, strings)
 # son reconocidos por el scanner
-
-# ASIG  -> ide opa EXP
-# EXP   -> ARIT | {COND}
-# COND  -> EXP opr EXP ? EXP : EXP
-# ARIT  -> cte ARIT1 | ide ARIT1 | (ARIT) ARIT1 | {COND}
-# ARIT1 -> opb ARIT ARIT1 | e
 
 
 import sys
-from obten_token import (
-    obten_token,
-    INT, 
-    LRP,
-    RRP,
-    BOO,
-    SMB,
-    STR,
-    END,
-    ERR
-)
+# from obten_token import (
+#     obten_token,
+#     INT, 
+#     LRP,
+#     RRP,
+#     BOO,
+#     SMB,
+#     STR,
+#     END,
+#     ERR
+# )
+import obten_token as scanner
 
 # Empata y obtiene el siguiente token
 def match(tokenEsperado):
     global token
-
-    # print('----')
-    # print(f"token {token}")
-    # print(f"token esperado {tokenEsperado}")
-    # print('----')
-
     if token == tokenEsperado:
-        token = obten_token()
+        token = scanner.obten_token()
     else:
         error("token equivocado")
         
@@ -45,9 +41,9 @@ def match(tokenEsperado):
 # Función principal: implementa el análisis sintáctico
 def parser():
     global token 
-    token = obten_token() # inicializa con el primer token
+    token = scanner.obten_token() # inicializa con el primer token
     prog()
-    if token == END:
+    if token == scanner.END:
         print("Expresion bien construida!!")
     else:
         error("expresion mal terminada")
@@ -57,21 +53,21 @@ def prog():
     prog()
 
 def exp():
-    if (token == LRP):
+    if (token == scanner.LRP):
         match(token) # delimitador (
         lista()
-        match(RRP)   # delimitador )
+        match(scanner.RRP)   # delimitador )
     else:
         atomo()
 
 def atomo():
-    if (token == SMB):
+    if (token == scanner.SMB):
         match(token) # Simbolo
     else:
         constante()
 
 def constante():
-    if (token == INT or token == BOO or token == STR):
+    if (token == scanner.INT or token == scanner.BOO or token == scanner.STR):
         match(token) #constante
 
 def lista():
