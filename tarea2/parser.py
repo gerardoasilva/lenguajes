@@ -15,29 +15,14 @@
 
 
 import sys
-from obten_token import (
-    obten_token,
-    INT, 
-    LRP,
-    RRP,
-    BOO,
-    SMB,
-    STR,
-    END,
-    ERR
-)
+
+import obten_token as scanner
 
 # Empata y obtiene el siguiente token
 def match(tokenEsperado):
     global token
-
-    # print('----')
-    # print(f"token {token}")
-    # print(f"token esperado {tokenEsperado}")
-    # print('----')
-
     if token == tokenEsperado:
-        token = obten_token()
+        token = scanner.obten_token()
     else:
         error("token equivocado")
         
@@ -45,45 +30,64 @@ def match(tokenEsperado):
 # Función principal: implementa el análisis sintáctico
 def parser():
     global token 
-    token = obten_token() # inicializa con el primer token
+    token = scanner.obten_token() # inicializa con el primer token
     prog()
-    if token == END:
-        print("Expresion bien construida!!")
-    else:
-        error("expresion mal terminada")
+    #if token == scanner.END:
+    #    print("Expresion bien construida!!")
+    #else:
+    #    error("Expresion mal terminada")
 
 def prog():
-    exp()
-    prog()
+    print("<prog>")
+    if token == scanner.END:
+        print(">>ENTRADA CORRECTA<<")
+    else:
+        exp()
+        prog()
+
 
 def exp():
-    if (token == LRP):
-        match(token) # delimitador (
-        lista()
-        match(RRP)   # delimitador )
-    else:
+    print("<exp>")  
+    if token == scanner.INT or token == scanner.BOO or token == scanner.STR or  token == scanner.SMB:
         atomo()
+    elif token == scanner.LRP:
+        lista()
+    else:
+        error("exp")
 
 def atomo():
-    if (token == SMB):
+    print("<atomo>")
+    if token == scanner.SMB:
         match(token) # Simbolo
     else:
         constante()
 
 def constante():
-    if (token == INT or token == BOO or token == STR):
+    if token == scanner.INT or token == scanner.BOO or token == scanner.STR:
         match(token) #constante
+        print("<constante>")
+    else:
+        error(">>ERROR SINTATICO<<")
 
 def lista():
+    if (token == scanner.LRP):
+        match(token) # delimitador (
         elementos()
-
+        print(">>ERROR SINTATICO<<")
+        match(scanner.RRP) # delimitador )
+    else:
+        error(">>ERROR SINTATICO<<")
+    
 def elementos():
+    print("<elementos>")
+    if token == scanner.INT or token == scanner.BOO or token == scanner.STR or token == scanner.SMB or token == scanner.LRP:
         exp()
         elementos()
 
 # Termina con un mensaje de error
 def error(mensaje):
-    print("ERROR:", mensaje)
+    print(mensaje)
     sys.exit(1)
 
 parser()
+
