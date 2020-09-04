@@ -17,7 +17,7 @@
 
 import sys
 
-import obten_token as scanner
+import A01282700_A01136536_A01282508_scanner as scanner
 
 # Empata y obtiene el siguiente token
 def match(tokenEsperado):
@@ -25,7 +25,7 @@ def match(tokenEsperado):
     if token == tokenEsperado:
         token = scanner.obten_token()
     else:
-        error("token equivocado")
+        error(">>ERROR SINTATICO<<")
         
 
 # Función principal: implementa el análisis sintáctico
@@ -66,7 +66,7 @@ def atomo():
 def constante():
     if token == scanner.INT or token == scanner.BOO or token == scanner.STR:
         print("<constante>")
-        match(token) #constante
+        match(token) # constante
     else:
         error(">>ERROR SINTATICO<<")
 
