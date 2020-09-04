@@ -16,17 +16,7 @@
 
 
 import sys
-# from obten_token import (
-#     obten_token,
-#     INT, 
-#     LRP,
-#     RRP,
-#     BOO,
-#     SMB,
-#     STR,
-#     END,
-#     ERR
-# )
+
 import obten_token as scanner
 
 # Empata y obtiene el siguiente token
@@ -43,45 +33,62 @@ def parser():
     global token 
     token = scanner.obten_token() # inicializa con el primer token
     prog()
-    if token == scanner.END:
-        print("Expresion bien construida!!")
-    else:
-        error("expresion mal terminada")
+    #if token == scanner.END:
+    #    print("Expresion bien construida!!")
+    #else:
+    #    error("Expresion mal terminada")
 
 def prog():
-    exp()
-    prog()
+    print("<prog>")
+    if token == scanner.END:
+        print(">>ENTRADA CORRECTA<<")
+    else:
+        exp()
+        prog()
+
 
 def exp():
-    if (token == scanner.LRP):
-        match(token) # delimitador (
-        lista()
-        match(scanner.RRP)   # delimitador )
-    else:
+    print("<exp>")  
+    if token == scanner.INT or token == scanner.BOO or token == scanner.STR or  token == scanner.SMB:
         atomo()
+    elif token == scanner.LRP:
+        lista()
+    else:
+        error("exp")
 
 def atomo():
-    if (token == scanner.SMB):
+    print("<atomo>")
+    if token == scanner.SMB:
         match(token) # Simbolo
     else:
         constante()
 
 def constante():
-    if (token == scanner.INT or token == scanner.BOO or token == scanner.STR):
+    if token == scanner.INT or token == scanner.BOO or token == scanner.STR:
+        print("<constante>")
         match(token) #constante
     else:
-        error("Error constante")
+        error(">>ERROR SINTATICO<<")
 
 def lista():
+    if (token == scanner.LRP):
+        match(token) # delimitador (
         elementos()
-
+        print("<lista>")
+        match(scanner.RRP) # delimitador )
+    else:
+        error(">>ERROR SINTATICO<<")
+    
 def elementos():
+    print("<elementos>")
+    if token == scanner.INT or token == scanner.BOO or token == scanner.STR or token == scanner.SMB or token == scanner.LRP:
         exp()
         elementos()
 
 # Termina con un mensaje de error
 def error(mensaje):
-    print("ERROR:", mensaje)
+    print(mensaje)
     sys.exit(1)
 
 parser()
+

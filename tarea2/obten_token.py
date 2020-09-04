@@ -30,7 +30,7 @@ ERR = 200  # Error léxico: palabra desconocida
 MT = [[  1, LRP, RRP,   5,   0, END,   2,   4,   3,   3,   3], # edo 0 - estado inicial
       [  1, ERR, ERR, ERR, INT, INT, ERR, ERR, ERR, ERR, ERR], # edo 1 - dígitos enteros
       [  2, ERR, ERR, ERR,   2, ERR, STR, ERR,   2,   2,   2], # edo 2 - strings
-      [ERR, ERR, ERR, ERR, SMB, ERR, ERR, ERR,   3,   3,   3], # edo 3 - simbolos
+      [ERR, SMB, SMB, ERR, SMB, ERR, ERR, ERR,   3,   3,   3], # edo 3 - simbolos
       [ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, BOO, BOO, ERR], # edo 4 - booleanos
       [ERR, ERR, ERR,   5, ERR, ERR, ERR, ERR, ERR, ERR, ERR]] # edo 5 - estado de error
     
@@ -93,7 +93,7 @@ def obten_token():
             print("Delimitador ", lexema)
             return RRP          
         elif edo == STR:
-            lexema += _c # el último caracter forma el lexema
+            lexema += _c  # el último caracter forma el lexema
             print("String ", lexema)
             return STR
         elif edo == BOO:
@@ -109,6 +109,6 @@ def obten_token():
             return END
         else:   
             _leer = False # el último caracter no es raro
-            print("ERROR! palabra ilegal", lexema)
+            print(">>ERROR LEXICO<<", lexema)
             return ERR
 
