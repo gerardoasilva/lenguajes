@@ -64,8 +64,8 @@ def atomo():
 
 def constante():
     if token == scanner.INT or token == scanner.BOO or token == scanner.STR:
-        match(token) #constante
         print("<constante>")
+        match(token) #constante
     else:
         error(">>ERROR SINTATICO<<")
 
@@ -73,7 +73,7 @@ def lista():
     if (token == scanner.LRP):
         match(token) # delimitador (
         elementos()
-        print(">>ERROR SINTATICO<<")
+        print("<lista>")
         match(scanner.RRP) # delimitador )
     else:
         error(">>ERROR SINTATICO<<")
