@@ -109,6 +109,11 @@ def obten_token():
             return END
         else:   
             _leer = False # el último caracter no es raro
-            print(">>ERROR LEXICO<<", lexema)
+            #print(">>ERROR LEXICO<<", lexema)}
+            error(">>ERROR LEXICO<<")
             return ERR
 
+# Termina con un mensaje de error
+def error(mensaje):
+    print(mensaje)
+    sys.exit(1)

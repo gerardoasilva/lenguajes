@@ -54,7 +54,7 @@ def exp():
     elif token == scanner.LRP:
         lista()
     else:
-        error("exp")
+        error(">>ERROR SINTATICO<<")
 
 def atomo():
     print("<atomo>")
